@@ -1,0 +1,29 @@
+name: MLCommons GaNDLF Generic MLCube
+description: MLCommons GaNDLF MLCube, containing functionality for calculating metrics.
+authors:
+- name: MLCommons Medical Working Group
+  email: gandlf@mlcommons.org
+  org: MLCommons
+platform:
+  accelerator_count: 0
+docker:
+  image: mlcommons/gandlf-brats-metrics:1.0.1
+  build_context: ../
+  build_file: Dockerfile-CPU
+  build_strategy: auto
+singularity:
+  image: mlcommons-gandlf-1.0.1.simg
+tasks:
+  evaluate:
+    entrypoint: python3.9 /entrypoint.py
+    parameters:
+      inputs:
+        predictions: predictions
+        labels: labels
+        parameters_file:
+          type: file
+          default: parameters.yaml
+      outputs:
+        output_path:
+          type: file
+          default: results.yaml
